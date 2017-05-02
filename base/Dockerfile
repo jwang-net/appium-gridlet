@@ -46,7 +46,8 @@ RUN apt-get update -qqy && \
   rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 ENV ANDROID_BUILD_TOOLS_VERSION=25.0.3 \
-    ANDROID_HOME=/root
+    ANDROID_HOME=/root \
+    ANDROID_SDK_VERSION=25 \
 
 ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
@@ -56,6 +57,7 @@ ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/bu
 RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
     unzip tools.zip && rm tools.zip && \
     echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
+    echo y | android update sdk -a -u -t android-${ANDROID_SDK_VERSION},sys-img-armeabi-v7a-google_apis-${ANDROID_SDK_VERSION} && \
     chmod a+x -R $ANDROID_HOME && \
     chown -R root:root $ANDROID_HOME
 
