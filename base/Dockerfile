@@ -7,7 +7,6 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
 ENV PATH=$PATH:$JAVA_HOME/bin
 
-
 #================================================================
 # Miscellaneous packages
 # Includes minimal runtime used for executing non GUI Java programs
@@ -59,3 +58,24 @@ RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-lin
     echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
     chmod a+x -R $ANDROID_HOME && \
     chown -R root:root $ANDROID_HOME
+
+ENV APPIUM_VERSION=1.6.3 \
+    UDEV_REMOTE_FILE=https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules
+
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
+    apt-get -qqy install nodejs && \
+    npm install -g appium@${APPIUM_VERSION} --no-shrinkwrap  && \
+    npm cache clean && \
+    apt-get remove --purge -y npm && \
+    apt-get autoremove --purge -y && \
+    mkdir /etc/udev/rules.d && \
+    wget --no-verbose $UDEV_REMOTE_FILE -O /etc/udev/rules.d/51-android.rules && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get clean
+
+#=======================================
+# Expose default port of appium
+#=======================================
+EXPOSE 4723 5900
+
+CMD appium
