@@ -7,10 +7,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
 ENV PATH=$PATH:$JAVA_HOME/bin
 
-#================================================================
-# Miscellaneous packages
-# Includes minimal runtime used for executing non GUI Java programs
-#================================================================
+# apt-get dependencies
 RUN apt-get update -qqy
 RUN apt-get -qqy --no-install-recommends install
 RUN apt-get -qqy --no-install-recommends install ca-certificates \
@@ -32,9 +29,7 @@ RUN apt-get update -qqy && \
     libqt5webkit5 \
     unzip && \
 
-#=======================================
-# Setting JAVA_HOME in PATH
-#=======================================
+# set java home
   { \
 		echo '#!/bin/sh'; \
 		echo 'set -e'; \
@@ -50,9 +45,8 @@ ENV ANDROID_BUILD_TOOLS_VERSION=25.0.3 \
 
 ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
-#================================================================
-# Includes Android SDK
-#================================================================
+# install android build-tools, and sdks 25 (Android 7), 23 (Android 6), 22 (Android 5)
+# install abis for all relevant android sdks
 RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
     unzip tools.zip && rm tools.zip && \
     echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
@@ -62,6 +56,7 @@ RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-lin
     chmod a+x -R $ANDROID_HOME && \
     chown -R root:root $ANDROID_HOME
 
+# get latest stable version of appium
 ENV APPIUM_VERSION=1.6.3 \
     UDEV_REMOTE_FILE=https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules
 
@@ -76,7 +71,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get clean
 
-#=======================================
-# Expose default port of appium
-#=======================================
-EXPOSE 4723 5900
+# expose ports of appium and default emulator port
+EXPOSE 4723
+EXPOSE 5900
+EXPOSE 5554

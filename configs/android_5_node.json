@@ -5,7 +5,7 @@
         "platform":"Android",
         "browserName":"Android",
         "deviceName":"emulator-5554",
-        "platformVersion":"4",
+        "platformVersion":"5",
         "newCommandTimeout":"30",
         "deviceReadyTimeout":5
       }
