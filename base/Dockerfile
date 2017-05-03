@@ -58,6 +58,7 @@ RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-lin
     unzip tools.zip && rm tools.zip && \
     echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
     echo y | android update sdk -a -u -t android-${ANDROID_SDK_VERSION},sys-img-armeabi-v7a-google_apis-${ANDROID_SDK_VERSION} && \
+    echo n | android create avd --force -n android_api_25 -t 1 --abi google_apis/armeabi-v7a && \
     chmod a+x -R $ANDROID_HOME && \
     chown -R root:root $ANDROID_HOME
 
@@ -80,4 +81,4 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
 #=======================================
 EXPOSE 4723 5900
 
-CMD appium
+CMD emulator -avd android_api_25 -no-boot-anim -no-window -noaudio -gpu off & adb wait-for-device & appium
