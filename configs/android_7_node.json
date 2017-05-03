@@ -7,7 +7,8 @@
         "deviceName":"emulator-5554",
         "platformVersion":"7",
         "newCommandTimeout":"30",
-        "deviceReadyTimeout":5
+        "deviceReadyTimeout":5,
+        "app": "/Users/jewang/Development/app-verification-android-demo-app/target/app/avid-ias-3.11.6.apk"
       }
     ],
   "configuration":
