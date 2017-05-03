@@ -46,7 +46,7 @@ RUN apt-get update -qqy && \
   rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 ENV ANDROID_BUILD_TOOLS_VERSION=25.0.3 \
-    ANDROID_HOME=/root \
+    ANDROID_HOME=/root
 
 ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
@@ -80,5 +80,3 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
 # Expose default port of appium
 #=======================================
 EXPOSE 4723 5900
-
-CMD emulator -avd android_api_25 -no-boot-anim -no-window -noaudio -gpu off & adb wait-for-device & appium
