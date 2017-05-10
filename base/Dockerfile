@@ -51,7 +51,6 @@ RUN wget -O tools.zip https://dl.google.com/android/repository/tools_r25.2.3-lin
     unzip tools.zip && rm tools.zip && \
     echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
     echo y | android update sdk -a -u -t android-25,sys-img-armeabi-v7a-google_apis-25 && \
-    echo y | android update sdk -a -u -t android-23,sys-img-armeabi-v7a-google_apis-23 && \
     echo y | android update sdk -a -u -t android-22,sys-img-armeabi-v7a-google_apis-22 && \
     chmod a+x -R $ANDROID_HOME && \
     chown -R root:root $ANDROID_HOME
