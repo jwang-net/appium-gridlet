@@ -1,8 +1,7 @@
 # appium-gridlet
-the manlet of appium grids
+##### the manlet of appium grids
 
-has some dockerfiles
-has some node configs
+has some dockerfiles & node configs
 
 Build base Dockerfile and then build emulator Dockerfiles.
 
